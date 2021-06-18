@@ -7,6 +7,7 @@ public class Main {
         Tablero tablero=new Tablero();
         tablero.llenarTablero();
         Ficha ficha=new Ficha(tablero);
+        System.out.println("------------Mini Damas------------------");
         ficha.colocarSimboloEnTablero();
         
     }
