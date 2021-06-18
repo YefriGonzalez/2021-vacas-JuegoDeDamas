@@ -8,5 +8,6 @@ public class Main {
         tablero.llenarTablero();
         Ficha ficha=new Ficha(tablero);
         ficha.colocarSimboloEnTablero();
+        
     }
 }
