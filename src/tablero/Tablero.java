@@ -4,13 +4,11 @@ public class Tablero {
 
     protected String[][] tablero;
     private static String espacio;
-    private String ficha1 = " O ";
-    private String ficha2 = " X ";
     private String colorBlanco; 
     private String colorNegro;
     private String colorDefault;
     private String colorLetraDefault;
-   
+
     public Tablero(){
         this.tablero=new String[9][9];
         espacio = "   ";
@@ -33,7 +31,7 @@ public class Tablero {
         this.tablero = tablero;
     }
 
-    public void imprimirTablero() {
+    public  void imprimirTablero() {
         for(int i=1;i<9;i++){
             System.out.print(" "+tablero[0][i]);
         }
@@ -62,6 +60,5 @@ public class Tablero {
                 tablero[i][j]=espacio;
             }
         }
-        imprimirTablero();
     }
 }

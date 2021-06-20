@@ -5,13 +5,16 @@ public class Usuario {
     private int puntuacion;
     private int partidasGanadas;
     private int partidasPerdidas;
+    private int id;
 
-    public Usuario(String nombre,int puntuacion,int partidasGanadas,int partidasPerdidas){
+    public Usuario(int id,String nombre,int puntuacion,int partidasGanadas,int partidasPerdidas){
+        this.id=id;
         this.nombre=nombre;
         this.puntuacion=puntuacion;
         this.partidasGanadas=partidasGanadas;
         this.partidasPerdidas=partidasPerdidas;
     }
+
 
     public void setNombre(String nombre){
         this.nombre=nombre;
@@ -44,7 +47,11 @@ public class Usuario {
         return partidasPerdidas;
     }
 
+    public int getId(){
+        return id;
+    }
+
     public String getInformacion(){
-        return "Nombre: "+nombre+". Puntuacion: "+puntuacion+". Partidas Ganadas: "+partidasGanadas+". Partidas Perdidas: "+partidasPerdidas;
+        return "Id: "+id+". Nombre: "+nombre+". Puntuacion: "+puntuacion+". Partidas Ganadas: "+partidasGanadas+". Partidas Perdidas: "+partidasPerdidas;
     }
 }
