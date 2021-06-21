@@ -217,7 +217,7 @@ public class Ficha {
                 }
             }
         }
-        if(contador==16){
+        if(contador>=64){
             jugador1.setPartidasGanadas(1);
             System.out.println("Ganador: "+jugador1.getInformacion());
             return true;
@@ -235,7 +235,7 @@ public class Ficha {
                 }
             }
         } 
-        if(contador==16){
+        if(contador>=64){
             jugador2.setPartidasGanadas(1);
             System.out.println("Ganador: "+jugador2.getInformacion());
             return true;
