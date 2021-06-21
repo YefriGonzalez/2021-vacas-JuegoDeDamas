@@ -10,7 +10,7 @@ public class Tablero {
     private String colorLetraDefault;
 
     public Tablero(){
-        this.tablero=new String[9][9];
+        this.tablero=new String[10][10];
         espacio = "   ";
         tablero[0][0]="   ";
         colorBlanco = "\u001B[47m";
@@ -52,8 +52,8 @@ public class Tablero {
     }
     
     public void llenarTablero(){
-        for(int i=0;i<9;i++){
-            for(int j=0;j<9;j++){
+        for(int i=0;i<10;i++){
+            for(int j=0;j<10;j++){
                 tablero[j][0]=""+j;
                 tablero[0][i]=" "+i;
                 tablero[i][j]=espacio;

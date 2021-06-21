@@ -10,7 +10,7 @@ public class Ficha {
     private Tablero tablero;
     private String letraBlanca;
     private String colorLetraDefault;
-    Ficha[] ficha=new Ficha[24];
+
 
     public Ficha(){
 
@@ -66,20 +66,22 @@ public class Ficha {
     }
 
     public void pedirPosicionDeCambio(Usuario jugador1, Usuario jugador2,String simbolo1,String simbolo2,int opcion){
-        int contador=0;
-        while(contador<3){
+        boolean ganador=false;
+        while(ganador!=true){
             if(opcion==1){
                 turnoJugador1(jugador1,simbolo1,simbolo2);
                 this.tablero.imprimirTablero();
                 turnoJugador2(jugador2,simbolo2,simbolo1);
                 this.tablero.imprimirTablero();
-                contador++;
+                ganador=evaluarJugador1(jugador1,simbolo2);
+                ganador=evaluarJugador2(jugador2,simbolo1);
             } else if (opcion==2){
                 turnoJugador2(jugador2,simbolo2,simbolo1);
                 this.tablero.imprimirTablero();
                 turnoJugador1(jugador1,simbolo1,simbolo2);
                 this.tablero.imprimirTablero();
-                contador++;
+                ganador=evaluarJugador1(jugador1,simbolo1);
+                ganador=evaluarJugador2(jugador2,simbolo2);
             }
         }
     }
@@ -92,8 +94,7 @@ public class Ficha {
             int posicionInicialY=scanner.nextInt();
             System.out.print(jugador1.getNombre()+" Ingrese Posicion inicial en X: ");
             int posicionInicialX=scanner.nextInt();
-            if(this.tablero.getTablero()[posicionInicialY+1][posicionInicialX+1].equals(simbolo2) || this.tablero.getTablero()[posicionInicialY+1][posicionInicialX-1].equals(simbolo2)){
-                if(this.tablero.getTablero()[posicionInicialY+2][posicionInicialX+2].equals(Tablero.getEspacio()) || this.tablero.getTablero()[posicionInicialY+2][posicionInicialX-2].equals(Tablero.getEspacio())){
+            if(this.tablero.getTablero()[posicionInicialY+1][posicionInicialX+1].equals(simbolo2) && this.tablero.getTablero()[posicionInicialY+2][posicionInicialX+2].equals(Tablero.getEspacio()) || (this.tablero.getTablero()[posicionInicialY+1][posicionInicialX-1].equals(simbolo2) && this.tablero.getTablero()[posicionInicialY+2][posicionInicialX-2].equals(Tablero.getEspacio()))){
                     puedeComer=true;
                     System.out.println("!!Hay posibilidades que puedas comer una ficha!!!!");
                     System.out.print(jugador1.getNombre()+" Ingrese Posicion final en Y: ");
@@ -104,42 +105,45 @@ public class Ficha {
                         this.tablero.getTablero()[posicionFinalY][posicionFinalX]=this.tablero.getTablero()[posicionInicialY][posicionInicialX];
                         this.tablero.getTablero()[posicionInicialY][posicionInicialX]=Tablero.getEspacio();
                         this.tablero.getTablero()[posicionInicialY+1][posicionInicialX+1]=Tablero.getEspacio();
+                        System.out.println("-------Ficha comida--------\n");
                         posicionVacia=false;
                     } else if(posicionFinalY==posicionInicialY+2 && posicionFinalX==posicionInicialX-2){
                         this.tablero.getTablero()[posicionFinalY][posicionFinalX]=this.tablero.getTablero()[posicionInicialY][posicionInicialX];
                         this.tablero.getTablero()[posicionInicialY][posicionInicialX]=Tablero.getEspacio();
                         this.tablero.getTablero()[posicionInicialY+1][posicionInicialX-1]=Tablero.getEspacio();
+                        System.out.println("-------Ficha comida--------\n");
                         posicionVacia=false;
                     } else {
                         this.tablero.imprimirTablero();
                     }
-                }
+                
             } else {
                 puedeComer=false;
             }
 
-            if(this.tablero.getTablero()[posicionInicialY][posicionInicialX].equals(simbolo1) && puedeComer==false){
-                if(this.tablero.getTablero()[posicionInicialY][posicionInicialX]!=Tablero.getEspacio()){
-                    System.out.print(jugador1.getNombre()+" Ingrese Posicion final en Y: ");
-                    int posicionFinalY=scanner.nextInt();
-                    System.out.print(jugador1.getNombre()+" Ingrese Posicion final en X: ");
-                    int posicionFinalX=scanner.nextInt();
-                    if(this.tablero.getTablero()[posicionFinalY][posicionFinalX].equals(Tablero.getEspacio()) && posicionFinalY>posicionInicialY && posicionFinalY<posicionInicialY+2 &&(posicionFinalX<posicionInicialX+2 && posicionFinalX>posicionInicialX-2)){
-                        this.tablero.getTablero()[posicionFinalY][posicionFinalX]=this.tablero.getTablero()[posicionInicialY][posicionInicialX];
-                        this.tablero.getTablero()[posicionInicialY][posicionInicialX]=Tablero.getEspacio();
-                        posicionVacia=false;
-                    
+            if(puedeComer==false){
+                if(this.tablero.getTablero()[posicionInicialY][posicionInicialX].equals(simbolo1)){
+                    if(this.tablero.getTablero()[posicionInicialY][posicionInicialX]!=Tablero.getEspacio()){
+                        System.out.print(jugador1.getNombre()+" Ingrese Posicion final en Y: ");
+                        int posicionFinalY=scanner.nextInt();
+                        System.out.print(jugador1.getNombre()+" Ingrese Posicion final en X: ");
+                        int posicionFinalX=scanner.nextInt();
+                        if(this.tablero.getTablero()[posicionFinalY][posicionFinalX].equals(Tablero.getEspacio()) && posicionFinalY>posicionInicialY && posicionFinalY<posicionInicialY+2 &&(posicionFinalX<posicionInicialX+2 && posicionFinalX>posicionInicialX-2)){
+                            this.tablero.getTablero()[posicionFinalY][posicionFinalX]=this.tablero.getTablero()[posicionInicialY][posicionInicialX];
+                            this.tablero.getTablero()[posicionInicialY][posicionInicialX]=Tablero.getEspacio();
+                            posicionVacia=false;
+                        } else {
+                            System.out.println("Movimiento no permitido");
+                            this.tablero.imprimirTablero();
+                        }
                     } else {
-                        System.out.println("Movimiento no permitido");
+                        System.out.println("Coordenas iniciales incorrectas");
                         this.tablero.imprimirTablero();
                     }
                 } else {
-                    System.out.println("Coordenas iniciales incorrectas");
+                    System.out.println("Esta seleccionando la ficha incorrecta");
                     this.tablero.imprimirTablero();
                 }
-            } else {
-                System.out.println("Esta seleccionando la ficha incorrecta");
-                this.tablero.imprimirTablero();
             }
         } while(posicionVacia!=false);
     }
@@ -152,58 +156,59 @@ public class Ficha {
             int posicionInicialY=scanner.nextInt();
             System.out.print(jugador2.getNombre()+" Ingrese Posicion inicial en Y: ");
             int posicionInicialX=scanner.nextInt();
-            if(this.tablero.getTablero()[posicionInicialY-1][posicionInicialX-1].equals(simbolo1) || this.tablero.getTablero()[posicionInicialY-1][posicionInicialX+1].equals(simbolo1)){
-                if(this.tablero.getTablero()[posicionInicialY-2][posicionInicialX+2].equals(Tablero.getEspacio()) || this.tablero.getTablero()[posicionInicialY-2][posicionInicialX-2].equals(Tablero.getEspacio())){
-                    puedeComer=true;
-                    System.out.println("!!Hay posibilidades que puedas comer una ficha!!!!");
-                    System.out.print(jugador2.getNombre()+" Ingrese Posicion final en Y: ");
-                    int posicionFinalY=scanner.nextInt();
-                    System.out.print(jugador2.getNombre()+" Ingrese Posicion final en X: ");
-                    int posicionFinalX=scanner.nextInt();
-                    if(posicionFinalY==posicionInicialY-2 && posicionFinalX==posicionInicialX+2 ){
-                        this.tablero.getTablero()[posicionFinalY][posicionFinalX]=this.tablero.getTablero()[posicionInicialY][posicionInicialX];
-                        this.tablero.getTablero()[posicionInicialY][posicionInicialX]=Tablero.getEspacio();
-                        this.tablero.getTablero()[posicionInicialY-1][posicionInicialX+1]=Tablero.getEspacio();
-                        posicionVacia=false;
-                    } else if(posicionFinalY==posicionInicialY-2 && posicionFinalX==posicionInicialX-2){
-                        this.tablero.getTablero()[posicionFinalY][posicionFinalX]=this.tablero.getTablero()[posicionInicialY][posicionInicialX];
-                        this.tablero.getTablero()[posicionInicialY][posicionInicialX]=Tablero.getEspacio();
-                        this.tablero.getTablero()[posicionInicialY-1][posicionInicialX-1]=Tablero.getEspacio();
-                        posicionVacia=false;
-                    } else {
-                        this.tablero.imprimirTablero();
-                    }
-                }
+            if(this.tablero.getTablero()[posicionInicialY-1][posicionInicialX-1].equals(simbolo1) &&this.tablero.getTablero()[posicionInicialY-2][posicionInicialX-2].equals(Tablero.getEspacio()) || (this.tablero.getTablero()[posicionInicialY-1][posicionInicialX+1].equals(simbolo1) &&this.tablero.getTablero()[posicionInicialY-2][posicionInicialX+2].equals(Tablero.getEspacio()))){
+                puedeComer=true;
+                System.out.println("!!Hay posibilidades que puedas comer una ficha!!!!");
+                System.out.print(jugador2.getNombre()+" Ingrese Posicion final en Y: ");
+                int posicionFinalY=scanner.nextInt();
+                System.out.print(jugador2.getNombre()+" Ingrese Posicion final en X: ");
+                int posicionFinalX=scanner.nextInt();
+                if(posicionFinalY==posicionInicialY-2 && posicionFinalX==posicionInicialX+2 ){
+                    this.tablero.getTablero()[posicionFinalY][posicionFinalX]=this.tablero.getTablero()[posicionInicialY][posicionInicialX];
+                    this.tablero.getTablero()[posicionInicialY][posicionInicialX]=Tablero.getEspacio();
+                    this.tablero.getTablero()[posicionInicialY-1][posicionInicialX+1]=Tablero.getEspacio();
+                    System.out.println("-----------Ficha comida--------\n");
+                    posicionVacia=false;
+                } else if(posicionFinalY==posicionInicialY-2 && posicionFinalX==posicionInicialX-2){
+                    this.tablero.getTablero()[posicionFinalY][posicionFinalX]=this.tablero.getTablero()[posicionInicialY][posicionInicialX];
+                    this.tablero.getTablero()[posicionInicialY][posicionInicialX]=Tablero.getEspacio();
+                    this.tablero.getTablero()[posicionInicialY-1][posicionInicialX-1]=Tablero.getEspacio();
+                    System.out.println("-------Ficha comida--------\n");
+                    posicionVacia=false;
+                } else {
+                    this.tablero.imprimirTablero();
+                }    
             } else {
                 puedeComer=false;
             }
-            if(this.tablero.getTablero()[posicionInicialY][posicionInicialX].equals(simbolo2) && puedeComer==false){
-                if(this.tablero.getTablero()[posicionInicialY][posicionInicialX]!=Tablero.getEspacio()){
-                    System.out.print(jugador2.getNombre()+" Ingrese Posicion final en Y: ");
-                    int posicionFinalY=scanner.nextInt();
-                    System.out.print(jugador2.getNombre()+" Ingrese Posicion final en X: ");
-                    int posicionFinalX=scanner.nextInt();
-                    if(this.tablero.getTablero()[posicionFinalY][posicionFinalX].equals(Tablero.getEspacio())&& posicionFinalY<posicionInicialY && posicionFinalY>posicionInicialY-2 &&(posicionFinalX<posicionInicialX+2 && posicionFinalX>posicionInicialX-2)){
-                        this.tablero.getTablero()[posicionFinalY][posicionFinalX]=this.tablero.getTablero()[posicionInicialY][posicionInicialX];
-                        this.tablero.getTablero()[posicionInicialY][posicionInicialX]=Tablero.getEspacio();
-                        posicionVacia=false;
-                    
+            if(puedeComer==false){
+                if(this.tablero.getTablero()[posicionInicialY][posicionInicialX].equals(simbolo2) ){
+                    if(this.tablero.getTablero()[posicionInicialY][posicionInicialX]!=Tablero.getEspacio()){
+                        System.out.print(jugador2.getNombre()+" Ingrese Posicion final en Y: ");
+                        int posicionFinalY=scanner.nextInt();
+                        System.out.print(jugador2.getNombre()+" Ingrese Posicion final en X: ");
+                        int posicionFinalX=scanner.nextInt();
+                        if(this.tablero.getTablero()[posicionFinalY][posicionFinalX].equals(Tablero.getEspacio())&& posicionFinalY<posicionInicialY && posicionFinalY>posicionInicialY-2 &&(posicionFinalX<posicionInicialX+2 && posicionFinalX>posicionInicialX-2)){
+                            this.tablero.getTablero()[posicionFinalY][posicionFinalX]=this.tablero.getTablero()[posicionInicialY][posicionInicialX];
+                            this.tablero.getTablero()[posicionInicialY][posicionInicialX]=Tablero.getEspacio();
+                            posicionVacia=false;
+                        } else {
+                            System.out.println("Movimiento no permitido");
+                            this.tablero.imprimirTablero();
+                        }
                     } else {
-                        System.out.println("Movimiento no permitido");
+                        System.out.println("Coordenas iniciales incorrectas");
                         this.tablero.imprimirTablero();
                     }
                 } else {
-                    System.out.println("Coordenas iniciales incorrectas");
+                    System.out.println("Esta seleccionando la ficha incorrecta");
                     this.tablero.imprimirTablero();
                 }
-            } else {
-                System.out.println("Esta seleccionando la ficha incorrecta");
-                this.tablero.imprimirTablero();
             }
         } while(posicionVacia!=false);
     }
 
-    public boolean evaluarJugador1(String simbolo1){
+    public boolean evaluarJugador1(Usuario jugador1,String simbolo1){
         int contador=0;
         for(int i=1;i<9;i++){
             for(int j=1;j<9;j++){
@@ -213,13 +218,15 @@ public class Ficha {
             }
         }
         if(contador==16){
+            jugador1.setPartidasGanadas(1);
+            System.out.println("Ganador: "+jugador1.getInformacion());
             return true;
         } else {
             return false;
         }
     }
 
-    public boolean evaluarJugador2(String simbolo){
+    public boolean evaluarJugador2(Usuario jugador2,String simbolo){
         int contador=0;
         for(int i=1;i<9;i++){
             for(int j=1;j<9;j++){
@@ -229,6 +236,8 @@ public class Ficha {
             }
         } 
         if(contador==16){
+            jugador2.setPartidasGanadas(1);
+            System.out.println("Ganador: "+jugador2.getInformacion());
             return true;
         } else{
             return false;
