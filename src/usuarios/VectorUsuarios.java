@@ -53,7 +53,6 @@ public class VectorUsuarios {
         for(int i=0;i<contador;i++){
             System.out.print(usuarios[i].getInformacion());
             System.out.println("");
-            
         }
         if(usuarios[0]==null){
             System.out.println("\nNo hay usuarios registrados.\n");

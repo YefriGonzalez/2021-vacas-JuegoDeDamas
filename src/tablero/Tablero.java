@@ -40,7 +40,6 @@ public class Tablero {
             System.out.print(tablero[i][0]+" ");
             for (int j = 1; j < 9; j++) {
                 if ((i + j) % 2 == 0) {
-                    
                     System.out.print(colorBlanco+tablero[i][j]+colorDefault+colorLetraDefault); 
                 } else {
                     

@@ -116,12 +116,12 @@ public class PiedraPapelTijera {
             System.out.println("     Id: "+VectorUsuarios.getUsuario()[idGanador].getId()+"  Nombre: "+VectorUsuarios.getUsuario()[idGanador].getNombre());
             this.ficha.colocarSimboloEnTablero();
             System.out.println("     Id: "+VectorUsuarios.getUsuario()[idPerdedor].getId()+"  Nombre: "+VectorUsuarios.getUsuario()[idPerdedor].getNombre());
-            this.ficha.pedirPosicionDeCambio(VectorUsuarios.getUsuario()[idGanador],VectorUsuarios.getUsuario()[idPerdedor]);
+            this.ficha.pedirPosicionDeCambio(VectorUsuarios.getUsuario()[idGanador],VectorUsuarios.getUsuario()[idPerdedor],Ficha.getSimbolo1(),Ficha.getSimbolo2(),1);
         } else if(opcion==2){
             System.out.println("     Id: "+VectorUsuarios.getUsuario()[idPerdedor].getId()+" Nombre: "+VectorUsuarios.getUsuario()[idPerdedor].getNombre());
             this.ficha.colocarSimboloEnTablero();
             System.out.println("     Id: "+VectorUsuarios.getUsuario()[idGanador].getId()+" Nombre: "+VectorUsuarios.getUsuario()[idGanador].getNombre());
-            this.ficha.pedirPosicionDeCambio(VectorUsuarios.getUsuario()[idGanador],VectorUsuarios.getUsuario()[idPerdedor]);
+            this.ficha.pedirPosicionDeCambio(VectorUsuarios.getUsuario()[idGanador],VectorUsuarios.getUsuario()[idPerdedor],Ficha.getSimbolo2(),Ficha.getSimbolo1(),2);
         }
     } 
     

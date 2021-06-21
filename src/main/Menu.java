@@ -33,8 +33,8 @@ public class Menu {
                 int id1;
                 int id2;
                 if(VectorUsuarios.getUsuario()[0]!=null && VectorUsuarios.getUsuario()[1]!=null){
-                    vector1.ordenarmientoUsuarios();
                     tablero.llenarTablero();
+                    vector1.ordenarmientoUsuarios();
                     System.out.println("");
                     System.out.print("Ingrese Id del Primer jugador: ");
                     id1=scanner.nextInt();
