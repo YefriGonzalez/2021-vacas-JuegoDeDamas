@@ -38,12 +38,13 @@ public class VectorUsuarios {
     public void ordenarmientoUsuarios(){
         for (int i = 0; i <contador; i++) {
             for (int j = 0; j < (contador-i-1); j++) {
-                if(usuarios[j].getNombre().compareTo(usuarios[j+1].getNombre()) > 0){
+                if(usuarios[j].getPartidasGanadas()<usuarios[j+1].getPartidasGanadas()){
                     Usuario aux = usuarios[j];
                     usuarios[j] = usuarios[j+1];
                     usuarios[j+1]= aux;
                 }
             }
+            
         }
         mostrarUsuario();
     }
